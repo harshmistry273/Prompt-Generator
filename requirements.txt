@@ -1,0 +1,11 @@
+# FASTAPI
+fastapi[all]
+
+# LANCGHAIN
+langchain
+
+# SUPABASE
+supabase
+
+# UTILITY
+passlib[bcrypt]
