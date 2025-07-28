@@ -4,7 +4,7 @@ from app.crud.user import UserCRUD
 from app.exceptions.base_exceptions import AppException
 from app.exceptions.database_exceptions import DataBaseException
 from app.exceptions.user_exceptions import UserAlreadyExists
-from app.schemas.user import CreateUser
+from app.schemas.user import CreateUser, LoginUser
 from app.utils.passwords import PasswordManager
 
 from fastapi import HTTPException, status
@@ -13,7 +13,7 @@ from fastapi import HTTPException, status
 class UserService:
     
     # SERVICE FOR USER REGISTRATION
-    def register_user(user_data: CreateUser):
+    def register_user(self, user_data: CreateUser):
         try:
             # CONVERT DATA TO DICT
             user_data: dict = user_data.model_dump()
@@ -42,4 +42,3 @@ class UserService:
         except Exception as e:
             logger.error(f"Unexpected error: {e}")
             raise AppException(message=f"Unexpected error: {e}")
-    

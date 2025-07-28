@@ -1,45 +1,59 @@
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordBearer
 
 from app.core.logging import logger
 from app.exceptions.base_exceptions import AppException
-from app.exceptions.database_exceptions import DataBaseException
-from app.exceptions.user_exceptions import UserAlreadyExists
-from app.schemas.user import CreateUser
-from app.services.user import UserService
+from app.exceptions.auth_exceptions import FailedTokenException, InvalidPasswordException
+from app.exceptions.user_exceptions import UserNotFound
+from app.schemas.user import LoginUser
+from app.services.auth import AuthServices
 
 
 router = APIRouter()
-service = UserService()
+service = AuthServices()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-@router.post("/create-user", status_code=status.HTTP_201_CREATED)
-def create_user(user_data: CreateUser):
+
+@router.post("/login", status_code=status.HTTP_200_OK)
+def login_user(user_data: LoginUser):
     try:
-        new_user = service.register_user(user_data=user_data)
+        access_token = service.login_for_access_token(user_data=user_data)
         logger.info("Sending Response")
         return JSONResponse(
             status_code=status.HTTP_201_CREATED,
             content={
-                "message": "User Created",
-                "data": [new_user],
+                "message": "User Logged In",
+                "data": [access_token],
                 "status": True,
                 "error": None
             }
         )
-
-    except DataBaseException as e:
+        
+    except FailedTokenException as e:
         return JSONResponse(
             status_code=e.status_code,
             content={
-                "message": "DB Error",
+                "message": "Failed to create token",
+                "data": [],
+                "status": False,
+                "error": e.message
+            }
+        )
+
+    except InvalidPasswordException as e:
+        return JSONResponse(
+            status_code=e.status_code,
+            content={
+                "message": "Invalid Password",
                 "data": [],
                 "status": False,
                 "error": e.message
             }
         )
     
-    except UserAlreadyExists as e:
+    except UserNotFound as e:
         return JSONResponse(
             status_code=e.status_code,
             content={
@@ -54,7 +68,7 @@ def create_user(user_data: CreateUser):
         return JSONResponse(
             status_code=e.status_code,
             content={
-                "message": "DB Error",
+                "message": "An Error Occured",
                 "data": [],
                 "status": False,
                 "error": e.message

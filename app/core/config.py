@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     # UTILITY
     SECRET_KEY: str
     ALGORITHM: str
+    EXPIRES_MINUTES: int
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

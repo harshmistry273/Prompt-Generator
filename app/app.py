@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from app.core.logging import logger
 from app.api.v1.users import router as user_router
+from app.api.v1.auth import router as auth_router
 
 # INITIALIZE APP
 app = FastAPI(
@@ -31,3 +32,4 @@ def check_health():
 
 
 app.include_router(user_router)
+app.include_router(auth_router)

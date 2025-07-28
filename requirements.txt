@@ -9,3 +9,4 @@ supabase
 
 # UTILITY
 passlib[bcrypt]
+pyjwt

@@ -13,4 +13,3 @@ class CreateUser(BaseModel):
 class LoginUser(BaseModel):
     email: EmailStr
     password: str
-    confirm_password: str
