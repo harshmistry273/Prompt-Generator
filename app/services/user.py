@@ -6,7 +6,6 @@ from app.exceptions.base_exceptions import AppException
 from app.exceptions.database_exceptions import DataBaseException
 from app.exceptions.user_exceptions import UserAlreadyExists
 from app.schemas.user import CreateUser, LoginUser
-from app.utils.email import send_mail_background
 from app.utils.passwords import PasswordManager
 
 

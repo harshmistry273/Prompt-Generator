@@ -36,3 +36,5 @@ class SupaBaseConnection:
             resets supabase client
         """
         cls._client = None
+
+client = SupaBaseConnection.get_client()
