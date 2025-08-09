@@ -1,5 +1,6 @@
 # FASTAPI
 fastapi[all]
+fastapi_mail
 
 # LANCGHAIN
 langchain

@@ -17,6 +17,17 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     ALGORITHM: str
     EXPIRES_MINUTES: int
+    
+    # EMAIL
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_PORT: int
+    MAIL_SERVER: str
+    MAIL_FROM: str
+    MAIL_STARTTLS: bool
+    MAIL_SSL_TLS: bool
+    USE_CREDENTIALS: bool
+    USE_CREDENTIALS: bool
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
